@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="UTF-8"?> 
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<!--namespace该是Mapper的完整限定名 -->
+<mapper namespace="com.scujcc.qingniao.mapper.UserMapper">
+	<!--定义java bean的属性与数据库表的列之间的映射。type="Student"用到了configuration.xml中定义的别名 -->
+	<resultMap id="UserResultMap" type="User">
+		<!--id映射 -->
+		<id property="id" column="id" />
+		<!--普通属性映射 -->
+		<result property="pwd" column="PASSWORD" />
+		
+		<result property="name" column="name" />
+		<result property="signature" column="signature" />
+		<result property="dr" column="dr" />
+	</resultMap>
+
+	<!--与Mapper接口中的方法对应，包括 方法名和参数类型。SQL语句中以“#{}”的形式引用参数 -->
+	<select id="getUsers"  resultMap="UserResultMap">
+		SELECT *
+		FROM users 
+	</select>
+	<insert id="addUser" parameterType="User">
+	   insert into users (id,name,password) values (user_seq.NEXTVAL,#{name},#{pwd})
+	   <selectKey resultType="java.lang.Integer" order="AFTER" keyProperty="id" >  
+         SELECT user_seq.CURRVAL AS id FROM DUAL
+       </selectKey>  
+	   
+	</insert>
+</mapper> 

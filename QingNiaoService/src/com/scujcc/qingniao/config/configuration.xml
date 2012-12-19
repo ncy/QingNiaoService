@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="UTF-8"?> 
+<!DOCTYPE configuration PUBLIC "-//mybatis.org//DTD Config 3.0//EN" "http://mybatis.org/dtd/mybatis-3-config.dtd">
+
+<configuration>
+	<!--表明重用预编译的SQL语句 -->
+	<settings>
+		<setting name="defaultExecutorType" value="REUSE" />
+	</settings>
+
+	<!--类型别名定义。今后可只用Student来代替它冗长的 全限定名 -->
+	<typeAliases>
+		<typeAlias alias="User" type="com.scujcc.qingniao.domain.Users" />
+	</typeAliases>
+
+	<!--environments可包含多个environment元素。 每个environment配置与数据库交互的细节，这里 只需要配置一个。default属性是指在创建SqlSessionFactory 
+		时，若没有明确指定要用哪个environment，则使用此 属性指定的 -->
+	<environments default="development">
+		<environment id="development">
+			<transactionManager type="jdbc" />
+			<!--使用连接池的数据源配置 -->
+			<dataSource type="POOLED">
+				<property name="driver" value="oracle.jdbc.driver.OracleDriver" />
+				<property name="url" value="jdbc:oracle:thin:@Numb-PC:1521:orcl" />
+				<property name="username" value="ncy" />
+				<property name="password" value="ncy" />
+			</dataSource>
+		</environment>
+	</environments>
+
+	<!--指定要用到的mapper文件。以下的resource属性告诉 MyBatis要在类路径下的resources目录下找StudentMapper.xml文件。我们将把mapper文件存放在src目录下的resources目录中，并让ant把resources目录拷贝到classes中，而classes目录会被ant添加到类路径中。 -->
+	<mappers>
+		<mapper resource="com/scujcc/qingniao/persistence/UserMapper.xml" />
+	</mappers>
+
+</configuration> 
