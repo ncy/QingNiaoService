@@ -39,6 +39,8 @@ public class EchoProtocol implements Runnable {
 			try {
 				clntSock.close();
 			} catch (IOException e) {
+				
+				logger.info("");
 			}
 		}
 	}

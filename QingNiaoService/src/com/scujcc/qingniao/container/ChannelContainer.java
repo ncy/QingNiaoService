@@ -7,14 +7,14 @@ import com.scujcc.qingniao.channel.Channeler;
 
 public class ChannelContainer {
 	private volatile static ChannelContainer channelContainer;
-	private Map<String, Channeler> channels;
+	private Map<Integer, Channeler> channels;
 
 	private ChannelContainer() {
-		this.channels = new HashMap<String, Channeler>();
+		this.channels = new HashMap<Integer, Channeler>();
 	}
 
-	private ChannelContainer(String channelContainerName, Channeler channeler) {
-		this.channels = new HashMap<String, Channeler>();
+	private ChannelContainer(int channelContainerName, Channeler channeler) {
+		this.channels = new HashMap<Integer, Channeler>();
 		this.channels.put(channelContainerName, channeler);
 	}
 
@@ -28,12 +28,19 @@ public class ChannelContainer {
 		}
 		return channelContainer;
 	}
-
-	private synchronized void addChanneler(String channelName) {
+    /**
+     * 注册新的消息信道
+     * @param channelName
+     */
+	private synchronized void addChanneler(int channelName) {
 		this.channels.put(channelName, new Channeler());
 	}
-
-	public Channeler getChanneler(String channelName) {
+    /**
+     * 得到消息信道
+     * @param channelName
+     * @return
+     */
+	public Channeler getChanneler(int channelName) {
 		if (this.channels.get(channelName) == null)
 			this.addChanneler(channelName);
 		return this.channels.get(channelName);
